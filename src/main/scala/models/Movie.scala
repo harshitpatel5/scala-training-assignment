@@ -1,0 +1,26 @@
+package models
+
+case class Movie(){
+  var imdbTitleId: Any = ""
+  var title: Any = ""
+  var originalTitle: Any = ""
+  var year: Any = ""
+  var datePublished: Any = ""
+  var genre: Any = ""
+  var duration: Any = ""
+  var country: Any = ""
+  var language: Any = ""
+  var director: Any = ""
+  var writer: Any = ""
+  var productionCompany: Any = ""
+  var actors: Any = ""
+  var description: Any = ""
+  var averageVote: Any = ""
+  var votes: Any = ""
+  var budget: Any = ""
+  var usaGrossIncome: Any = ""
+  var worldwideGrossIncome: Any = ""
+  var metascore: Any = ""
+  var reviewsFromUser: Any = ""
+  var reviewsFromCritics: Any = ""
+}
