@@ -51,11 +51,29 @@ object MovieService {
     resultList
   }
 
+  def getMoviesByBudgetRangeAndCounty(minBudget: Int, maxBudget: Int, country: String): List[Movie] = {
+    if(minBudget <= 0) throw Exception("Invalid minimum budget, must be numeric value and greater than 0")
+    if(maxBudget <= 0) throw Exception("Invalid maximum budget, must be numeric value and greater than 0")
+    if(maxBudget < minBudget) throw Exception("Minimum budget cannot be greater than Maximum budget, invalid input")
+    val resultList = movieList.filter(movie => {
+      movie.country == country && movie.budget.toString != "" && budgetStringToInt(movie.budget.toString) >= minBudget
+      && budgetStringToInt(movie.budget.toString) <= maxBudget
+    }).sortWith((movieA: Movie, movieB: Movie)=>{
+      compareMoviesByBudget(movieA.budget.toString, movieB.budget.toString)
+    })
+    resultList
+  }
+
   def compareMoviesByBudget(budgetA: String, budgetB: String) = {
     val numerics = "0123456789"
     val budgetAInt = budgetA.toCharArray.filter(c => numerics.contains(c)).mkString.toInt
     val budgetBInt = budgetB.toCharArray.filter(c => numerics.contains(c)).mkString.toInt
     budgetAInt > budgetBInt
+  }
+
+  def budgetStringToInt(budget: String): Int ={
+    val numerics = "0123456789"
+    budget.toCharArray.filter(c => numerics.contains(c)).mkString.toInt
   }
 
 }

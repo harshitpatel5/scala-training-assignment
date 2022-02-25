@@ -81,4 +81,26 @@ class MovieServiceTest extends AnyFunSuite {
       MovieService.getMoviesByCountryAndVoters(country = "USA", votes = -1)
     }
   }
+
+  test("test getMoviesByBudgetRangeAndCounty"){
+    val movies = MovieService.getMoviesByBudgetRangeAndCounty(
+      country = "USA", minBudget = 5000, maxBudget = 20000)
+
+    //Positive Cases
+    assert(movies.length > 0)
+
+    //Negative Cases
+    assertThrows[Exception]{
+      MovieService.getMoviesByBudgetRangeAndCounty(
+        country = "USA", minBudget = 5000, maxBudget = 200)
+    }
+    assertThrows[Exception]{
+      MovieService.getMoviesByBudgetRangeAndCounty(
+        country = "USA", minBudget = -3, maxBudget = 200)
+    }
+    assertThrows[Exception]{
+      MovieService.getMoviesByBudgetRangeAndCounty(
+        country = "USA", minBudget = 5000, maxBudget = -5)
+    }
+  }
 }

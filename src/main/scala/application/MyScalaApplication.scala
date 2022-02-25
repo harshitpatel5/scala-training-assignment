@@ -126,14 +126,49 @@ object MyScalaApplication extends App {
         }
         if(movies.length != 0) printMovies(movies) else println("No records found!")
       }
-      case 5 => println("Implementation of case 5 is coming soon")
+      case 5 => {
+        println("You are about to fetch movies by country, minimum budget and maximum budget")
+        print("\nEnter County's name: ")
+        val country = scala.io.StdIn.readLine()
+        print("Enter minimum budget(numeric value): ")
+        val minBudget: Int = try {
+          scala.io.StdIn.readInt()
+        } catch {
+          case e: Exception => e match {
+            case e: NumberFormatException => println("You did not entered a numberic value\n")
+            case _ => println("Something unexpected went wrong")
+          }
+            0
+        }
+        print("Enter maximum budget(numeric value): ")
+        val maxBudget: Int = try {
+          scala.io.StdIn.readInt()
+        } catch {
+          case e: Exception => e match {
+            case e: NumberFormatException => println("You did not entered a numberic value\n")
+            case _ => println("Something unexpected went wrong")
+          }
+            0
+        }
+        val movies = try{
+          MovieService.getMoviesByBudgetRangeAndCounty(country = country, minBudget = minBudget, maxBudget = maxBudget)
+        } catch {
+          case e: Exception => e match {
+            case e: Exception => println(e.getMessage)
+            case _ => println("Something unexpected went wrong, terminating the application")
+          }
+            List()
+        }
+        if(movies.length != 0) printMovies(movies) else println("No records found!")
+      }
       case _ => println("Wrong Enter again\n")
     }
   }
 
+  // Added vote and Language too for better comparison of data
   def printMovies(moviesList: List[Movie]): Unit = {
     moviesList.map(movie=>println(s"Title: ${movie.title} | Published Year: ${movie.year} " +
       s"| Budget: ${movie.budget} | User Review: ${movie.reviewsFromUser} | Country: ${movie.country}" +
-      s" | Genre: ${movie.genre} | Duration: ${movie.duration} | Votes: ${movie.votes}"))
+      s" | Genre: ${movie.genre} | Duration: ${movie.duration} | Votes: ${movie.votes} | Language: ${movie.language}"))
   }
 }
